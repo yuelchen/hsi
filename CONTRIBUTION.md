@@ -8,9 +8,10 @@ Please follow this workflow to submit your adjustments or additions.
 * **Manifest Control:** `.claude-plugin/plugin.json` carries core metadata only. Commands are
   auto-discovered from `commands/*.md` — do not add a command manifest to it. New plugin entries
   belong in `.claude-plugin/marketplace.json`.
-* **The Skill Owns the Workflow:** gates, tier rules, flows, and the reconcile procedure live in
-  `skills/hybrid-spec-intent/SKILL.md`. Long-form formats and templates go in its `references/`
-  directory so they load only when needed.
+* **The Skill Owns the Workflow:** gates, tier rules, and flows live in
+  `skills/hybrid-spec-intent/SKILL.md`. The finish procedure — change-scoped review, reconcile,
+  coherence checks — lives in `references/finish.md`, and long-form formats and templates sit
+  beside it in `references/`, so each loads only at the step that needs it.
 * **Commands Stay Thin:** files in `commands/` invoke the skill in a named mode. They must not
   restate workflow logic — duplicated rules drift apart. Every command needs YAML frontmatter
   with `name` and `description`.

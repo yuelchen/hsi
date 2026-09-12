@@ -5,16 +5,19 @@ Ends every DELTA and ARCHITECTURAL change, whether reached at the end of the flo
 unreconciled delta means the capability spec is lying about current behavior.
 
 1. Verify no `tasks.md` entry is unticked, **including shim resolution and preview approval**.
-   Block if any are.
-2. Run the **change-scoped review** (below).
-3. **Reconcile:** apply the delta's ADDED / MODIFIED / REMOVED sections into
+   Block if any are. Preview approval is ticked only on the user's explicit STOP#2 approval;
+   passing tests do not count.
+2. Confirm the full suite is green, running it with the suite command declared in the map's
+   *Stack & Commands* section — never a hardcoded command. Block if it is not.
+3. Run the **change-scoped review** (below).
+4. **Reconcile:** apply the delta's ADDED / MODIFIED / REMOVED sections into
    `docs/hsi/capabilities/<cap>.md`.
-4. Assign stable IDs to ADDED requirements, continuing the capability's sequence. Never reuse a
+5. Assign stable IDs to ADDED requirements, continuing the capability's sequence. Never reuse a
    retired ID.
-5. Delete REMOVED requirements outright — git carries the history.
-6. Move `changes/<slug>/` to `changes/archive/<YYYY-MM-DD>-<slug>/`.
-7. Append one line to `changes/archive/index.md`.
-8. Run the coherence checks.
+6. Delete REMOVED requirements outright — git carries the history.
+7. Move `changes/<slug>/` to `changes/archive/<YYYY-MM-DD>-<slug>/`.
+8. Append one line to `changes/archive/index.md`.
+9. Run the coherence checks.
 
 ## Change-scoped review
 

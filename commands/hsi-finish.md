@@ -29,21 +29,17 @@ change directory, so there is nothing for this command to act on. Their ledger l
 the flow when the change completes. If the user asks to finish a refactor or other PATCH work,
 explain this rather than searching for something to process.
 
-## Procedure
+## Finishing each change
 
-Process the chosen changes one at a time, in the order they were started. For each, follow
-`${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/finish.md` exactly:
+Read `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/finish.md` and follow it for every
+chosen change — it holds the blockers, the change-scoped review, reconcile, and the coherence
+checks. Do not work from memory or from this file.
 
-1. **Refuse if `tasks.md` has unticked entries** — including shim resolution and **preview
-   approval**. Preview approval is ticked only on the user's explicit STOP#2 approval; passing
-   tests do not count. Report which entries are open, and move on to the next chosen change
-   rather than stopping the batch.
-2. **Refuse if the full suite is not green.** Run it using the suite command declared in the
-   map's *Stack & Commands* section. Never hardcode a test command.
-3. **Change-scoped review** — only the files this change touched. Continue without stopping if
-   it finds nothing; stop and present findings if it does.
-4. **Reconcile** — merge the delta into the capability spec, assign IDs, archive, append the
-   ledger line, run the coherence checks.
+What this command adds on top:
+
+- Process the chosen changes **one at a time, in the order they were started**.
+- When a change is refused — unticked tasks, a red suite — report why and **move on to the next
+  chosen change** rather than stopping the batch.
 
 Finish with a summary: which changes finished, which were refused and why, review findings the
 user chose to carry forward, and any coherence findings outstanding.
