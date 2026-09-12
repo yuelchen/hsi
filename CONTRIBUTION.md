@@ -95,3 +95,26 @@ grep -rniE 'flutter|pytest|cargo|npm' commands/  # must return nothing
 Then walk at least one change end to end at the tier your change affects. The DELTA path is the
 most informative single walk — it is the only one that exercises both stops, the isolated
 single-file test loop, and reconcile in one pass.
+
+### 5. Releasing
+
+`claude plugin update` compares **version numbers, not commits**. If `main` gets new commits but
+the version stays the same, every installed copy reports `already at the latest version` and keeps
+running the old code. **Every change that reaches `main` must bump the version.**
+
+1. Bump `version` in **both** `.claude-plugin/plugin.json` and this plugin's entry in
+   `.claude-plugin/marketplace.json`. While below 1.0:
+   - **minor** (`0.2.0` → `0.3.0`) when a command is added, removed, or renamed, or when behavior
+     changes in a way users will notice
+   - **patch** (`0.2.0` → `0.2.1`) for fixes and wording changes
+2. Commit, then confirm the two files agree — this refuses when they differ:
+   ```bash
+   claude plugin tag --dry-run
+   ```
+3. Merge to `main` and push.
+4. Tag the release from `main`, which creates and pushes `hybrid-spec-intent--v<version>`:
+   ```bash
+   claude plugin tag --push
+   ```
+
+Users then pick up the release with the update commands in the README, followed by a restart.
