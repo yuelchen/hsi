@@ -97,6 +97,7 @@ without loading any spec.
 
 | | |
 |---|---|
+| `/hsi [request]` | **start here** — ask a question, or describe what you want and get routed to the right command |
 | `/hsi-setup` | initialize — writes the map; for existing code, derives the capability index |
 | `/hsi-change <slug>` | start a change deliberately |
 | `/hsi-finish` | finish a change: review the files it touched, merge its delta into the capability spec, archive, run coherence checks |
@@ -104,7 +105,8 @@ without loading any spec.
 | `/hsi-audit` | full-project audit: spec drift across every capability, coverage gaps, security |
 
 The workflow is a **skill**, so it engages on any prompt that could change code — the commands
-are for invoking it deliberately.
+are for invoking it deliberately. Not sure which one you need? `/hsi` with a description announces
+which command fits, and asks before any that write project files or read the whole project.
 
 ## Install
 

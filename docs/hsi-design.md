@@ -238,6 +238,7 @@ skills/hybrid-spec-intent/
     capability-template.md
     map-template.md
 commands/
+  hsi.md                        front door: answers questions, routes to one command
   hsi-setup.md                  bootstrap map + capabilities (greenfield prompts, brownfield scans)
   hsi-change.md                 force entry into the workflow with a slug
   hsi-finish.md                 change-scoped review, then reconcile + archive
