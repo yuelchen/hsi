@@ -84,4 +84,5 @@ refuses while it is unticked.
 
 Shim entries always come in pairs — the shim, and its resolution. Resolution is *delete* or
 *promote to a specified adapter with its own requirement*. A shim that earns a permanent place is
-allowed to stay, but it gets specified rather than merely tolerated.
+allowed to stay, but it gets specified rather than merely tolerated: add a requirement for the
+adapter to the capability spec, annotate it with `@spec`, and remove the TEMPORARY marker.

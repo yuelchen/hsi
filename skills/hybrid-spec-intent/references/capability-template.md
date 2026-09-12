@@ -93,3 +93,25 @@ class SessionExpiryPolicy { ... }
 When a behavior spans subsystems, annotate the entry point in each one. When an entry point
 moves during a refactor, **the annotation moves with it** — that is part of the refactor, not
 cleanup afterwards.
+
+## Annotation rot
+
+An annotation asserts *this entity is the entry point implementing this ID*. Rot is that assertion
+becoming false, and **the dangerous cases leave the test suite green** — refactoring is
+behavior-preserving, so tests structurally cannot detect a stranded annotation.
+
+Guard against, in order of frequency:
+
+1. **Extraction** — logic moves to a new module, the annotation stays on a hollow wrapper. Move
+   the annotation with the entry point, as part of the refactor.
+2. **Copy-paste propagation** — an annotated function is used as a template and the annotation
+   rides along. Caught by coherence check 6.
+3. **Split** — one entry point becomes two, only one keeps the annotation. Also check 6.
+4. **Deletion without spec removal** — code goes, requirement stays. Advisory check 5.
+5. **Drift down the call graph** — helpers accumulate annotations until grep returns twelve hits
+   and none is clearly the entry point. Prevented by the entry-points-only rule.
+6. **Semantic staleness** — the requirement was modified and the annotated code no longer
+   satisfies it. No structural check can see this; the finish review looks for it in the files a
+   change touched, and `/hsi-audit` across the whole project.
+
+The coherence checks are defined in `finish.md`.

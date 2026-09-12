@@ -31,8 +31,8 @@ explain this rather than searching for something to process.
 
 ## Procedure
 
-Process the chosen changes one at a time, in the order they were started. For each, follow the
-skill's Finish section exactly:
+Process the chosen changes one at a time, in the order they were started. For each, follow
+`${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/finish.md` exactly:
 
 1. **Refuse if `tasks.md` has unticked entries** — including shim resolution and **preview
    approval**. Preview approval is ticked only on the user's explicit STOP#2 approval; passing

@@ -19,6 +19,9 @@ Please follow this workflow to submit your adjustments or additions.
 * **The Context Budget Is Load-Bearing:** changes that cause more to be loaded per change — a
   raised map cap, a new always-read file, reading the archive by default — defeat the plugin's
   purpose and need explicit justification in the PR.
+* **SKILL.md Stays Under 1,500 Words:** it loads in full every time the workflow engages. Detail
+  needed at only one step belongs in `skills/hybrid-spec-intent/references/`, named at that step.
+  When SKILL.md reaches the cap, move detail out — never raise the cap.
 
 ### 2. Submission Steps
 1. **Fork** this repository and pull it down to your machine.
@@ -90,6 +93,7 @@ Before opening a PR:
 claude plugin validate .                         # manifests, skills, agents, commands
 head -1 commands/*.md skills/*/SKILL.md          # every file opens with ---
 grep -rniE 'flutter|pytest|cargo|npm' commands/  # must return nothing
+wc -w skills/hybrid-spec-intent/SKILL.md          # must be 1500 or less
 ```
 
 Then walk at least one change end to end at the tier your change affects. The DELTA path is the

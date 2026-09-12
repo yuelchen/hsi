@@ -237,6 +237,7 @@ skills/hybrid-spec-intent/
     delta-template.md
     capability-template.md
     map-template.md
+    finish.md                   change-scoped review, reconcile, coherence checks
 commands/
   hsi.md                        front door: answers questions, routes to one command
   hsi-setup.md                  bootstrap map + capabilities, and the CLAUDE.md HSI section
