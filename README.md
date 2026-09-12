@@ -130,14 +130,31 @@ claude plugin install hybrid-spec-intent@hsi
 claude plugin marketplace add ./path/to/hsi
 ```
 
+**Let HSI read its own templates.** The plugin keeps its templates in its install folder, which is
+outside your project, so Claude Code asks permission before reading them — and the read fails
+anywhere it can't ask. Add this rule once to `~/.claude/settings.json`, merging it into an
+existing `permissions.allow` list if you have one:
+
+```json
+{
+  "permissions": {
+    "allow": ["Read(~/.claude/plugins/cache/hsi/**)"]
+  }
+}
+```
+
+The `**` covers every installed version, so the rule keeps working across updates. Without it,
+HSI still runs, but you'll be asked to approve each template read.
+
 Then, in the project you want to use it on:
 
 ```
 /hsi-setup
 ```
 
-That writes `docs/hsi/` and the context map. After that the workflow engages on its own for any
-prompt that could change code — the commands are there for when you want it deliberately.
+That writes `docs/hsi/`, the context map, and a short `## HSI` section in the project's
+`CLAUDE.md`, so the workflow engages in every session. After that, just describe the change you
+want — or use `/hsi` when you want a command deliberately.
 
 To pull a newer version later:
 

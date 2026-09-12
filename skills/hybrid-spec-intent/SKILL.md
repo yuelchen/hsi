@@ -130,7 +130,7 @@ The axes are independent, and the divergent cases are the reason for two of them
 Row 2 is why a single ladder does not work: a pure rename changes **no** specification, yet
 breaks every caller. It needs no delta file and full back-port handling.
 
-See `references/tier-rules.md` for the full trigger list and worked examples.
+See `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/tier-rules.md` for the full trigger list and worked examples.
 
 ## Escalation
 
@@ -220,7 +220,7 @@ Capability specs hold requirements with **stable IDs** and GIVEN/WHEN/THEN scena
 - **GIVEN is optional** but preferred whenever a precondition exists. Without it, preconditions
   get smuggled into the trigger and WHEN clauses become compound and untestable.
 
-See `references/capability-template.md`.
+See `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/capability-template.md`.
 
 ## `@spec` annotations
 
@@ -357,7 +357,7 @@ belongs to the user.
 
 ## Reference files
 
-- `references/tier-rules.md` — full triggers for both axes, worked examples, escalation cases.
-- `references/delta-template.md` — `delta.md` and `tasks.md` structure.
-- `references/capability-template.md` — requirement and scenario format, `@spec` placement.
-- `references/map-template.md` — the five capped sections of the context map.
+- `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/tier-rules.md` — full triggers for both axes, worked examples, escalation cases.
+- `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/delta-template.md` — `delta.md` and `tasks.md` structure.
+- `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/capability-template.md` — requirement and scenario format, `@spec` placement.
+- `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/map-template.md` — the five capped sections of the context map.

@@ -1,6 +1,6 @@
 # HSI — Hybrid Spec-Intent Development
 
-**Status:** implemented · **Version:** 0.1.0 · **Date:** 2026-09-12
+**Status:** implemented · **Date:** 2026-09-12 · the current version is in `.claude-plugin/plugin.json`
 
 ## 1. Thesis
 
@@ -239,7 +239,7 @@ skills/hybrid-spec-intent/
     map-template.md
 commands/
   hsi.md                        front door: answers questions, routes to one command
-  hsi-setup.md                  bootstrap map + capabilities (greenfield prompts, brownfield scans)
+  hsi-setup.md                  bootstrap map + capabilities, and the CLAUDE.md HSI section
   hsi-change.md                 force entry into the workflow with a slug
   hsi-finish.md                 change-scoped review, then reconcile + archive
   hsi-trim.md                   repetition, abstractions, dead code — behavior-preserving
@@ -273,9 +273,12 @@ skill in a named mode, as LID's do.
    rather than by semantic search. More importantly it is what makes Gate 1 answerable from the
    file in front of you instead of from the capability specs.
 
-**Still open.**
-
-3. **Root directory name.** `docs/hsi/` vs. an OpenSpec-style top-level `hsi/`.
-4. **Ship a `marketplace.json`?** Without one the plugin installs by path only.
-5. **Do `hsi-audit` and `hsi-trim` stay in the core plugin,** or split into a
-   companion plugin the way LID splits out `arrow-maintenance`?
+3. ~~Root directory name.~~ **`docs/hsi/`**, keeping the filename `project_context_map.md`.
+   Specs sit with the rest of the project's documentation rather than claiming a top-level
+   directory.
+4. ~~Ship a `marketplace.json`?~~ **Yes.** The repo is its own one-plugin marketplace, which is
+   what makes `claude plugin marketplace add yuelchen/hsi` work. `plugin.json` stays too: it
+   carries the plugin's identity and is the version `claude plugin tag` reads.
+5. ~~Do `hsi-audit` and `hsi-trim` stay in the core plugin?~~ **Yes.** Five commands behind one
+   `/hsi` front door is small enough that a companion plugin would add install steps without
+   reducing anything users load.

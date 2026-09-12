@@ -11,7 +11,7 @@
       "name": "hybrid-spec-intent",
       "description": "Fail-fast spec-driven development. Three gates (classify, contract pre-flight, red test) and two blast-radius axes route each change to the cheapest safe path. Includes /hsi (start here), /hsi-setup, /hsi-change, /hsi-finish, /hsi-trim and /hsi-audit.",
       "source": "./",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "development",
       "license": "MIT"
     }
