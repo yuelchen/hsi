@@ -20,7 +20,7 @@ One or two sentences. What is inadequate about current behavior.
 
 ## ADDED Requirements
 
-### Requirement: SAML login
+### AUTH-004 — SAML login
 
 #### Scenario: User signs in through the corporate IdP
 - **GIVEN** the workspace has a configured SAML provider
@@ -46,13 +46,14 @@ scenarios.
 One line on why it is going. The ID is retired permanently and never reused.
 ```
 
-ADDED requirements carry no ID until reconcile assigns one — write them under a descriptive
-`### Requirement:` heading. MODIFIED and REMOVED cite existing IDs, because they must resolve
-against the capability spec.
+ADDED requirements get the next free ID **reserved when the delta is drafted** (the rule is in the
+capability template), so tests and code carry the real `@spec` ID from the first test. MODIFIED
+and REMOVED cite existing IDs, because they must resolve against the capability spec.
 
 ## `tasks.md`
 
-The working checklist. Reconcile blocks while anything is unticked.
+The working checklist. **Tick each entry as its work lands**, not in a batch at the end. Finish
+refuses while anything is unticked and never ticks an entry itself.
 
 ```markdown
 # add-sso — tasks

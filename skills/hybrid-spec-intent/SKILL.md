@@ -45,9 +45,11 @@ be confidently classified is ARCHITECTURAL.** Fail toward ceremony.
 
 Before writing code, check whether the change alters a public or exported signature, a persisted
 schema or stored format, a wire format or API response shape, a config key / env var / CLI flag,
-or a contract listed in the map's Contracts section.
+or a contract listed in the map's Contracts section. If it does, find the call sites and consumers.
 
-None → code radius CONTAINED; proceed. Any → find the call sites, assess the radius, and **STOP**:
+If every existing caller, stored record, and consumer keeps working unchanged — a defaulted
+parameter, a new function, a new field existing readers ignore — the code radius is CONTAINED: say
+so in one line and proceed. If anything existing would break, assess the radius and **STOP**:
 
 ```
 ⚠️  BREAKING CHANGE
@@ -107,14 +109,16 @@ either way — nothing in the specification changed.
    `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/delta-template.md`, with
    requirements and scenarios per
    `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/capability-template.md`.
+   **Reserve the next free ID** for each ADDED requirement now, so tests and code carry the real
+   `@spec` ID from the first test. From here on, **tick each `tasks.md` entry as its work lands**.
 2. **STOP#1** — present the delta. *Is this the right feature?*
 3. Gate 3: tests in a **discrete, isolated test file** (e.g. `test/features/<slug>_test.dart`);
    confirm they fail correctly.
 4. Implement.
 5. Iterate with the map's **single-file** test command — not the full suite.
-6. **STOP#2** — preview the working behavior and the diff. *Is this the right feel?* Tick
-   `preview approved` in `tasks.md` **only** on the user's explicit approval — passing tests are
-   not approval.
+6. **STOP#2** — preview the working behavior and the diff. *Is this the right feel?* List any edit
+   made to `delta.md` since STOP#1. Tick `preview approved` in `tasks.md` **only** on the user's
+   explicit approval — passing tests are not approval.
 7. Back-port: fix tests broken elsewhere; resolve any shims.
 8. Run the **full suite**. Everything green.
 9. **Finish** (below).
@@ -149,18 +153,20 @@ Ends every DELTA and ARCHITECTURAL change — step 9 above, or `/hsi-finish` in 
 finish from memory.** These hold regardless:
 
 - Refuse to finish while any `tasks.md` entry is unticked, including shim resolution and preview
-  approval.
+  approval. Finish never ticks an entry itself — an unticked entry means refuse and name it.
 - Review only the files the change touched, and never fix a finding automatically.
 - Reconcile the delta into the capability spec — an unreconciled delta means the spec is lying.
 - Coherence checks soft-block: surface failures plainly; the user may override.
 
 ## The ledger
 
-`docs/hsi/changes/archive/index.md` is written **last**, one line per applied change, and never
-loaded by default:
+`docs/hsi/changes/archive/index.md` is written **last**, one table row per applied change, and
+never loaded by default:
 
 ```markdown
-2026-09-12 · add-sso · DELTA×LOCAL · auth · +AUTH-007,AUTH-008 ~AUTH-003
+| date | slug | tier | capabilities | summary |
+|---|---|---|---|---|
+| 2026-09-12 | add-sso | DELTA×LOCAL | auth | +AUTH-007 +AUTH-008 ~AUTH-003 SAML sign-in |
 ```
 
 Never append feature history to the map — its cap is what keeps per-change context flat.

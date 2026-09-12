@@ -68,9 +68,9 @@ docs/hsi/
   changes/
     add-sso/
       delta.md                ADDED / MODIFIED / REMOVED
-      tasks.md                checklist; reconcile blocks while unticked
+      tasks.md                checklist, ticked as work lands; finish blocks while unticked
     archive/
-      index.md                the ledger — one line per change, grep only
+      index.md                the ledger — one table row per change, grep only
       2026-09-12-add-sso/
 ```
 

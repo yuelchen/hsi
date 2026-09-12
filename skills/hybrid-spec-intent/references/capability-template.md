@@ -36,7 +36,10 @@ What this capability owns, in one or two sentences. Where its code lives.
 - Format is `<CAP>-<NNN>`, zero-padded to three digits, allocated in sequence.
 - **Stable.** Revisions mutate text, never the ID.
 - **Never reused.** A retired ID stays retired; git carries what it used to say.
-- Assigned at reconcile, not when the delta is drafted.
+- **Reserved when the delta is drafted.** The next free ID is one past the highest ID for this
+  capability found in the capability spec, in any open delta under `changes/`, and in archived
+  deltas under `changes/archive/` — so a retired ID is never handed out again. Finish confirms
+  the reservation is still free.
 
 Gaps in the sequence are normal and healthy — they are retired requirements.
 
@@ -81,6 +84,9 @@ The test that directly exercises the behavior:
 // @spec AUTH-003
 test('idle session expires after 30 minutes', () { ... });
 ```
+
+When one test class or group covers exactly one requirement, a single annotation on the class is
+enough. When it covers several, annotate each test.
 
 The entry point of the behavior's implementation graph — the topmost function, class, or module
 that owns it, never every helper beneath it:

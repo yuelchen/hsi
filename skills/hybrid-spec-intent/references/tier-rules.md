@@ -39,7 +39,8 @@ reaching past what the map describes, which is itself the signal.
 ## Code radius — Gate 2, by finding call sites
 
 ### CONTAINED
-Nothing that exists today breaks. New code only, or changes behind an unchanged interface.
+Nothing that exists today breaks. New code only, changes behind an unchanged interface, or backward-compatible additions such as a
+defaulted parameter.
 
 ### LOCAL
 Breaks callers, all within one capability. Fix them in the same pass; a shim is rarely justified

@@ -27,9 +27,10 @@ Three gates, each placed at the cheapest point where the change can be shown wro
 **Gate 1 — Classify.** Before reading any file beyond `map.md`, assign a tier. A change
 that cannot be confidently classified is ARCHITECTURAL. *Fail toward ceremony.*
 
-**Gate 2 — Contract pre-flight.** Before writing code: does this alter a public signature,
-a persisted/wire schema, a config key, or a contract another capability consumes? If yes,
-**STOP** with a ⚠️ breaking-change report naming exactly what breaks, and wait for text
+**Gate 2 — Contract pre-flight.** Before writing code: would this break an existing caller of a
+public signature, a persisted/wire schema, a config key, or a contract another capability
+consumes? Backward-compatible additions — a defaulted parameter, a new function — pass through as
+CONTAINED. If something breaks, **STOP** with a ⚠️ breaking-change report naming exactly what breaks, and wait for text
 confirmation. This is the highest-value stop in the workflow — it is the failure that is
 cheapest to catch here and most expensive to catch after code lands.
 
@@ -118,7 +119,7 @@ docs/hsi/
       delta.md              ADDED / MODIFIED / REMOVED
       tasks.md              checklist, ticked as work lands
     archive/
-      index.md              the ledger — one line per applied change
+      index.md              the ledger — one table row per applied change
       2026-09-12-add-sso/   applied delta, never read by default
 ```
 
@@ -183,8 +184,8 @@ Familiar to anyone coming from OpenSpec, and the reconcile step below is what Op
 `archive` does — plus ID assignment and a coherence check.
 
 ### `archive/index.md` — the ledger
-One line per applied change: date · slug · tier · capabilities touched · requirement IDs
-added/modified/removed. Grep-reachable, **never loaded by default**. This replaces the
+One table row per applied change: date, slug, tier, capabilities touched, and a summary listing
+requirement IDs added, modified, and removed. Grep-reachable, **never loaded by default**. This replaces the
 unbounded "System Intent Ledger" that the first draft appended to the context map.
 
 ## 5. Reconcile
@@ -203,7 +204,7 @@ only when it finds something. Its project-wide counterpart is `/hsi-audit`, the 
    by being deleted, or promoted to a documented adapter with its own requirement ID — not
    merely tolerated.
 2. Apply `delta.md`'s ADDED / MODIFIED / REMOVED into `capabilities/<cap>.md`.
-3. Assign stable IDs to ADDED requirements.
+3. Confirm the IDs reserved for ADDED requirements when the delta was drafted are still free.
 4. Delete REMOVED requirements outright — git carries the history.
 5. Move `changes/<slug>/` to `changes/archive/<date>-<slug>/`, append the ledger line.
 6. Run the coherence check.

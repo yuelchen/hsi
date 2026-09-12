@@ -29,7 +29,16 @@ will be replaced before touching them.
 ## Not configured
 
 Create `docs/hsi/` with `project_context_map.md`, `capabilities/`, `changes/`, and
-`changes/archive/index.md`. Read `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/map-template.md` for the map's structure and its
+`changes/archive/index.md` — the ledger — containing only this header:
+
+```markdown
+# Archived changes
+
+| date | slug | tier | capabilities | summary |
+|---|---|---|---|---|
+```
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/hybrid-spec-intent/references/map-template.md` for the map's structure and its
 hard line cap.
 
 **Detect which path applies** by whether the directory contains source beyond scaffolding.
