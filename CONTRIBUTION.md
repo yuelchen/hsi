@@ -100,7 +100,11 @@ single-file test loop, and reconcile in one pass.
 
 `claude plugin update` compares **version numbers, not commits**. If `main` gets new commits but
 the version stays the same, every installed copy reports `already at the latest version` and keeps
-running the old code. **Every change that reaches `main` must bump the version.**
+running the old code. **Every change to `skills/`, `commands/`, or the `.claude-plugin/` manifests
+must bump the version before it reaches `main`.**
+
+Changes only to `README.md`, `CONTRIBUTION.md`, or `docs/` do not change what the plugin does, so
+they go to `main` without a version bump or a tag.
 
 1. Bump `version` in **both** `.claude-plugin/plugin.json` and this plugin's entry in
    `.claude-plugin/marketplace.json`. While below 1.0:
@@ -112,9 +116,13 @@ running the old code. **Every change that reaches `main` must bump the version.*
    claude plugin tag --dry-run
    ```
 3. Merge to `main` and push.
-4. Tag the release from `main`, which creates and pushes `hybrid-spec-intent--v<version>`:
+4. Tag the release from `main` as `v<version>` and push the tag:
    ```bash
-   claude plugin tag --push
+   git tag -a v<version> -m "hybrid-spec-intent <version>"
+   git push origin v<version>
    ```
+   Use plain `git tag` here, not `claude plugin tag --push` — that command always names tags
+   `hybrid-spec-intent--v<version>`. Its `--dry-run` in step 2 is still the check that the two
+   manifests agree.
 
 Users then pick up the release with the update commands in the README, followed by a restart.
