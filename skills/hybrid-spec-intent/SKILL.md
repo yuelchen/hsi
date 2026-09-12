@@ -32,6 +32,11 @@ understand current behavior — the capability spec *is* current behavior. If th
 enough to classify a change, that is a signal the change is ARCHITECTURAL, not a signal to read
 more files.
 
+**Two user-invoked commands are deliberate exceptions.** `/hsi-trim` and `/hsi-audit` read across
+the whole project because their jobs cannot be done any other way — dead code, repetition, and
+drift across capabilities are only visible from everywhere at once. They run only when the user
+invokes them, never as part of a change. Nothing else widens the budget.
+
 ## Not configured yet?
 
 If `docs/hsi/project_context_map.md` does not exist, this project has not been set up.
@@ -155,10 +160,12 @@ ledger line. Still no delta file: nothing in the specification changed.
 5. Iterate using the map's **single-file** test command — not the full suite. This is the
    fail-fast loop; keep it tight.
 6. **STOP#2** — Feature Preview Approval. Present the working behavior and the diff. *Is this
-   the right feel?* A spec cannot answer this question.
+   the right feel?* A spec cannot answer this question. Tick the `preview approved` entry in
+   `tasks.md` **only** when the user explicitly approves — passing tests are not approval.
 7. Back-port: expand context to the files with failing tests, fix them, resolve any shims.
 8. Run the **full suite**. Everything green.
-9. Reconcile (below).
+9. Finish: the change-scoped review, then reconcile (see *Finish*, below). `/hsi-finish` runs the
+   same steps for a change picked up in a later session.
 
 ### ARCHITECTURAL
 Write `delta.md`, a proposed map diff, and the list of affected capabilities → **STOP#1** → then
@@ -255,21 +262,59 @@ Guard against, in order of frequency:
 5. **Drift down the call graph** — helpers accumulate annotations until grep returns twelve hits
    and none is clearly the entry point. Prevented by the entry-points-only rule.
 6. **Semantic staleness** — the requirement was modified and the annotated code no longer
-   satisfies it. No structural check can see this; `/hsi-audit` looks for it by judgment.
+   satisfies it. No structural check can see this. The finish review looks for it in the files a
+   change touched; `/hsi-audit` looks for it across the whole project.
 
-## Reconcile
+## Finish
 
-Runs after the full suite is green. Not optional — an unreconciled delta means the capability
-spec is lying about current behavior.
+Ends every DELTA and ARCHITECTURAL change, whether reached at the end of the flow or through
+`/hsi-finish` in a later session. Runs after the full suite is green. Not optional — an
+unreconciled delta means the capability spec is lying about current behavior.
 
-1. Verify no `tasks.md` entry is unticked, **including shim resolution**. Block if any are.
-2. Apply the delta's ADDED / MODIFIED / REMOVED sections into `docs/hsi/capabilities/<cap>.md`.
-3. Assign stable IDs to ADDED requirements, continuing the capability's sequence. Never reuse a
+1. Verify no `tasks.md` entry is unticked, **including shim resolution and preview approval**.
+   Block if any are.
+2. Run the **change-scoped review** (below).
+3. **Reconcile:** apply the delta's ADDED / MODIFIED / REMOVED sections into
+   `docs/hsi/capabilities/<cap>.md`.
+4. Assign stable IDs to ADDED requirements, continuing the capability's sequence. Never reuse a
    retired ID.
-4. Delete REMOVED requirements outright — git carries the history.
-5. Move `changes/<slug>/` to `changes/archive/<YYYY-MM-DD>-<slug>/`.
-6. Append one line to `changes/archive/index.md`.
-7. Run the coherence checks.
+5. Delete REMOVED requirements outright — git carries the history.
+6. Move `changes/<slug>/` to `changes/archive/<YYYY-MM-DD>-<slug>/`.
+7. Append one line to `changes/archive/index.md`.
+8. Run the coherence checks.
+
+### Change-scoped review
+
+The judgment checks no grep can do, limited to **only the files this change touched**. Never widen
+it to the rest of the codebase — the project-wide sweep is `/hsi-audit`.
+
+**Touched files** are the union of:
+
+- files changed in commits since `docs/hsi/changes/<slug>/delta.md` was first committed
+  (`git log --diff-filter=A --format=%H -- <that path>` gives the starting commit)
+- uncommitted changes in the working tree
+- files named in the change's `tasks.md`
+
+If the change directory was never committed, use the working tree plus `tasks.md`.
+
+Within those files, check:
+
+- **Hollow wrappers** — an annotated entry point that now only delegates.
+- **Semantic staleness** — for each requirement the delta ADDED or MODIFIED, read the annotated
+  code against its scenarios.
+- **Unresolved shims** — anything marked TEMPORARY that this change introduced.
+- **Security** — hardcoded secrets, unencrypted sensitive data, unsafe deserialization,
+  injection-prone string-built queries.
+
+**If nothing is found, continue to reconcile without stopping.** If anything is found, stop and
+present the findings with file:line, most severe first. For each, the user chooses:
+
+- **Fix now** — add a `tasks.md` entry, fix it within this change, re-run the suite, and review
+  again.
+- **Carry forward** — proceed; the finding is listed in the finish summary.
+
+Never fix a finding automatically. A fix that changes behavior beyond what the delta describes is
+an escalation: it needs a MODIFIED entry in this delta, or a change of its own.
 
 ### Coherence checks
 

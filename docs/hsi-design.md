@@ -192,7 +192,14 @@ unbounded "System Intent Ledger" that the first draft appended to the context ma
 Runs after tests are green. Not optional — an unreconciled delta means the capability spec
 is lying.
 
-1. Verify no `tasks.md` entry is unticked, **including shim resolution**. A shim is *resolved*
+A **change-scoped review** runs before the merge: judgment checks (hollow wrappers, semantic
+staleness, leftover shims) and a security pass over only the files the change touched. It pauses
+only when it finds something. Its project-wide counterpart is `/hsi-audit`, the one place besides
+`/hsi-trim` allowed to read the whole codebase.
+
+1. Verify no `tasks.md` entry is unticked, **including shim resolution and preview approval**.
+   Preview approval is ticked only on the user's explicit STOP#2 approval, never because tests
+   pass. A shim is *resolved*
    by being deleted, or promoted to a documented adapter with its own requirement ID — not
    merely tolerated.
 2. Apply `delta.md`'s ADDED / MODIFIED / REMOVED into `capabilities/<cap>.md`.
@@ -233,9 +240,9 @@ skills/hybrid-spec-intent/
 commands/
   hsi-setup.md                  bootstrap map + capabilities (greenfield prompts, brownfield scans)
   hsi-change.md                 force entry into the workflow with a slug
-  hsi-reconcile.md              apply + archive, batchable across pending changes
-  hsi-audit.md                  spec↔code coherence + security sweep
-  hsi-refactor.md               boilerplate/abstraction pass, routed through the tiers
+  hsi-finish.md                 change-scoped review, then reconcile + archive
+  hsi-trim.md                   repetition, abstractions, dead code — behavior-preserving
+  hsi-audit.md                  full-project drift, coverage, and security sweep
 ```
 
 Every command file needs YAML frontmatter (`name`, `description`) — none currently have
@@ -269,5 +276,5 @@ skill in a named mode, as LID's do.
 
 3. **Root directory name.** `docs/hsi/` vs. an OpenSpec-style top-level `hsi/`.
 4. **Ship a `marketplace.json`?** Without one the plugin installs by path only.
-5. **Do `hsi-audit` and `hsi-refactor` stay in the core plugin,** or split into a
+5. **Do `hsi-audit` and `hsi-trim` stay in the core plugin,** or split into a
    companion plugin the way LID splits out `arrow-maintenance`?

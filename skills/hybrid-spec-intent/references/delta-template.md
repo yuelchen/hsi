@@ -68,11 +68,19 @@ The working checklist. Reconcile blocks while anything is unticked.
 - [ ] shim: LegacyAuthAdapter wraps AuthService.login for 3 legacy callers — TEMPORARY
 - [ ] resolve shim: LegacyAuthAdapter — delete, or promote to a specified adapter
 
+## Preview
+- [ ] preview approved by user (STOP#2)
+
 ## Back-port
 - [ ] lib/ui/login_page.dart
 - [ ] lib/sync/background_auth.dart
 - [ ] full suite green
 ```
+
+**The preview entry is ticked only on the user's explicit approval at STOP#2** — never because
+tests pass. Passing tests prove the code does what the tests say; only the user can say it is the
+feature they wanted. Every DELTA and ARCHITECTURAL change carries this entry, and reconcile
+refuses while it is unticked.
 
 Shim entries always come in pairs — the shim, and its resolution. Resolution is *delete* or
 *promote to a specified adapter with its own requirement*. A shim that earns a permanent place is

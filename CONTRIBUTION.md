@@ -30,12 +30,29 @@ Please follow this workflow to submit your adjustments or additions.
 
 ### 3. Local Integration Testing
 
-Install your working copy as a marketplace so edits are testable end to end. From the repo root:
+Install your working copy as a marketplace so edits are testable end to end. The path given to
+`marketplace add` must contain `.claude-plugin/marketplace.json`, so run it from the repo root or
+pass the repo path explicitly:
 
 ```bash
-claude plugin marketplace add .
-claude plugin install hybrid-spec-intent@hsi
+claude plugin marketplace add .          # from the repo root
 ```
+
+Then install from the project you want to test *in* — not from this repo:
+
+```bash
+cd ~/some-scratch-project
+claude plugin install hybrid-spec-intent@hsi -s local
+```
+
+**`-s local` matters.** Both `marketplace add` and `install` default to `user` scope, which makes
+the plugin live in every project you open. `-s local` pins it to the project you run it from, so
+a work-in-progress skill cannot follow you into unrelated work. The marketplace itself can stay
+at user scope — it is only a source list.
+
+Test in a scratch project rather than in this repo. HSI's skill description says *consult for ALL
+code changes*, and so does LID's; with both enabled they compete on any prompt that touches code,
+which makes it hard to tell whose behavior you are observing.
 
 **Plugin files do not hot-reload.** After editing `SKILL.md`, a reference, or a command, pick
 the working copy back up before testing:

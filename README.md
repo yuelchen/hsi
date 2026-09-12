@@ -99,9 +99,9 @@ without loading any spec.
 |---|---|
 | `/hsi-setup` | initialize — writes the map; for existing code, derives the capability index |
 | `/hsi-change <slug>` | start a change deliberately |
-| `/hsi-reconcile` | apply deltas into capability specs, archive, run coherence checks |
-| `/hsi-audit` | spec drift, annotation rot, dead weight, security |
-| `/hsi-refactor` | find repetition, propose abstractions, apply through the tier system |
+| `/hsi-finish` | finish a change: review the files it touched, merge its delta into the capability spec, archive, run coherence checks |
+| `/hsi-trim` | find repetition, missing abstractions, and dead code; apply approved simplifications without changing behavior |
+| `/hsi-audit` | full-project audit: spec drift across every capability, coverage gaps, security |
 
 The workflow is a **skill**, so it engages on any prompt that could change code — the commands
 are for invoking it deliberately.

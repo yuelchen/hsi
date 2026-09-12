@@ -5,6 +5,27 @@ description: Initialize HSI in this project — writes the capped context map an
 
 Invoke the `hybrid-spec-intent` skill in setup mode.
 
+## Already configured?
+
+Check for `docs/hsi/project_context_map.md` **before doing anything else.**
+
+If it exists, **stop. Do not rewrite, regenerate, or overwrite any file under `docs/hsi/`.** The
+map and capability specs are curated by hand over time, and a second setup run would silently
+replace that work with a fresh inference.
+
+Tell the user the project is already set up and offer a **review** instead:
+
+- Is the map still under its line cap?
+- Does the Capability Index still match the code — any directories no capability claims, or
+  capabilities whose path glob matches nothing?
+- Do Stack & Commands still run?
+
+Report the findings and change nothing unless the user picks specific fixes. If they genuinely
+want to start over, they must say so explicitly; even then, confirm by naming the files that
+will be replaced before touching them.
+
+## Not configured
+
 Create `docs/hsi/` with `project_context_map.md`, `capabilities/`, `changes/`, and
 `changes/archive/index.md`. Use `references/map-template.md` for the map's structure and its
 hard line cap.
