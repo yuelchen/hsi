@@ -1,0 +1,19 @@
+{
+  "name": "hsi",
+  "metadata": {
+    "description": "Hybrid Spec-Intent development — fail-fast spec-driven workflow for Claude Code"
+  },
+  "owner": {
+    "name": "yuelchen"
+  },
+  "plugins": [
+    {
+      "name": "hybrid-spec-intent",
+      "description": "Fail-fast spec-driven development. Three gates (classify, contract pre-flight, red test) and two blast-radius axes route each change to the cheapest safe path. Includes /hsi-setup, /hsi-change, /hsi-reconcile, /hsi-audit and /hsi-refactor.",
+      "source": "./",
+      "version": "0.1.0",
+      "category": "development",
+      "license": "MIT"
+    }
+  ]
+}

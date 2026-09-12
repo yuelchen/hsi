@@ -1,0 +1,10 @@
+{
+  "name": "hybrid-spec-intent",
+  "description": "Fail-fast spec-driven development. Ceremony scales with blast radius; context load scales with the surface touched. Delta specs from OpenSpec, @spec linkage from LID.",
+  "version": "0.1.0",
+  "author": {
+    "name": "yuelchen"
+  },
+  "repository": "https://github.com/yuelchen/hsi",
+  "license": "MIT"
+}
