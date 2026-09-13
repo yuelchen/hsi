@@ -97,7 +97,8 @@ grep -rniE 'flutter|pytest|cargo|npm' commands/  # must return nothing
 wc -w skills/hybrid-spec-intent/SKILL.md          # must be 1500 or less
 ```
 
-Then walk at least one change end to end at the tier your change affects. The DELTA path is the
+Then walk at least one change end to end at the tier your change affects, using the demo
+project and scenarios in [`docs/hsi-testing.md`](docs/hsi-testing.md). The DELTA path is the
 most informative single walk — it is the only one that exercises both stops, the isolated
 single-file test loop, and reconcile in one pass.
 
